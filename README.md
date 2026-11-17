@@ -124,3 +124,7 @@ Sources/main.swift       macOS wiring: event tap, Accessibility, HID remap, mode
 Tests/main.swift         Tests for Engine and Geometry (`make test`, no XCTest needed).
 local.superduper.plist   LaunchAgent template.
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Template: `make install` fills in __BIN__ and __LOG__ and copies it to ~/Library/LaunchAgents. -->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>local.superduper</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__BIN__</string>
+    </array>
+    <!-- Start at login; restart only if it crashes. -->
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+        <false/>
+    </dict>
+    <!-- Keyboard handling is latency-sensitive. -->
+    <key>ProcessType</key>
+    <string>Interactive</string>
+    <!-- Only in a logged-in GUI session. -->
+    <key>LimitLoadToSessionType</key>
+    <string>Aqua</string>
+    <key>StandardErrorPath</key>
+    <string>__LOG__</string>
+</dict>
+</plist>

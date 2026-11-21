@@ -174,7 +174,6 @@ func setAXValue<T: BitwiseCopyable>(_ element: AXUIElement, _ attribute: String,
 /// Right control (not left) so the physical control key keeps its normal
 /// behavior; only the remapped caps lock gets tap-for-escape.
 final class CapsRemap {
-    private let client = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault)
     private let key = kIOHIDUserKeyUsageMapKey as CFString
     private let srcKey = kIOHIDKeyboardModifierMappingSrcKey
     private let dstKey = kIOHIDKeyboardModifierMappingDstKey
@@ -194,6 +193,11 @@ final class CapsRemap {
 
     private func update(add: Bool) {
         lastApplied = ProcessInfo.processInfo.systemUptime
+        // Use a fresh client every time. A long-lived client's service list goes
+        // stale: once a keyboard disconnects and reconnects (Bluetooth sleep,
+        // re-pairing), it no longer lists that keyboard, so the remap would
+        // silently apply to 0 services until superduper restarted.
+        let client = IOHIDEventSystemClientCreateSimpleClient(kCFAllocatorDefault)
         guard let services = IOHIDEventSystemClientCopyServices(client) as? [IOHIDServiceClient] else { return }
         var count = 0
         for service in services where IOHIDServiceClientConformsTo(
